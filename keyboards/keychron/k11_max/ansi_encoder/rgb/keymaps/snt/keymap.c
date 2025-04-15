@@ -39,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         /**/                                                                                                           KC_QUOT,             KC_ENT,  /******/ KC_HOME,
         KC_LSFT, KC_Z,/**/  KC_X,    KC_C,    KC_V,	   KC_B,/**/KC_B,     KC_N,	   KC_M, KC_COMM, KC_DOT,/**/KC_SLSH,  KC_RSFT, /**/         KC_UP,  /******/
         KC_ESC, KC_LOPTN, MT(MOD_LGUI,KC_LANGUAGE_2),
-                                     /******/ KC_SPC, /******/ MT(MAC_FN1,KC_SPC),LT(FN2,KC_LANGUAGE_1),/******/ KC_SPC,  /******/ MT(KC_RGUI,KC_LANGUAGE_1),
+                                     /******/ KC_SPC, /******/ LT(MAC_FN1,KC_SPC),LT(FN2,KC_LANGUAGE_1),/******/ KC_SPC,  /******/ MT(MOD_RGUI,KC_LANGUAGE_1),
                                                                                                                          /******/  KC_LEFT, KC_DOWN, KC_RGHT),
 
     [WIN_BASE] = LAYOUT_69_ansi(
@@ -49,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                                          KC_QUOT,  KC_ENT,  /******/ KC_HOME,
         KC_LSFT, /******/  KC_Z,	 KC_X,	  KC_C,    KC_V,	KC_B,	  KC_B,    KC_N,	KC_M,	 KC_COMM,  KC_DOT,	 KC_SLSH,  KC_RSFT, KC_UP,   /******/
         KC_ESC , KC_LALT,  MT(MOD_LCTL,KC_LANGUAGE_2),
-                                     /******/ KC_SPC,  /******/ MO(WIN_FN1),LT(FN2,KC_LANGUAGE_1), /******/ KC_SPC,/******/   MT(MOD_RCTL,KC_LANGUAGE_1), /******/  KC_LEFT, KC_DOWN, KC_RGHT),
+                                     /******/ KC_SPC,  /******/ LT(WIN_FN1,KC_SPC),LT(FN2,KC_LANGUAGE_1), /******/ KC_SPC,/******/   MT(MOD_RCTL,KC_LANGUAGE_1), /******/  KC_LEFT, KC_DOWN, KC_RGHT),
 
     [MAC_FN1] = LAYOUT_69_ansi(
         _______, KC_BRID,  KC_BRIU, KC_MCTRL, KC_LNPAD,RGB_VAD, RGB_VAI,  KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  _______, /******/ RGB_TOG,
