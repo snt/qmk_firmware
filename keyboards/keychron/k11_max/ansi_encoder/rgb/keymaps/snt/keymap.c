@@ -17,47 +17,49 @@
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 
+
+
 enum layers {
     MAC_BASE,
     WIN_BASE,
     MAC_FN1,
     WIN_FN1,
     FN2,
-    VIM_MOU,
+    MAC_VIM,
+    WIN_VIM,
     COMPAT,
 };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_69_ansi(
-        KC_GRV,  KC_1,	   KC_2,	 KC_3,	  KC_4,    KC_5,	KC_6,	  KC_7,    KC_8,	KC_9,	 KC_0,	   KC_MINS,  KC_EQL,   KC_BSPC, /******/ KC_MUTE,
-        KC_TAB,  KC_Q,	   KC_W,	 KC_E,	  KC_R,    KC_T,	KC_Y,	  KC_U,    KC_I,	KC_O,	 KC_P,	   KC_LBRC,  KC_RBRC,  KC_BSLS, /******/ KC_DEL,
-        KC_LCTL, KC_A,	   KC_S,	 KC_D,	  KC_F,    KC_G,    /******/  KC_H,    KC_J,	KC_K,	 KC_L,	   LT(VIM_MOU,KC_SCLN),
-                                                                                                                         KC_QUOT,  KC_ENT,  /******/ KC_HOME,
-        KC_LSFT, /******/  KC_Z,	 KC_X,	  KC_C,    KC_V,	KC_B,	  KC_B,    KC_N,	KC_M,	 KC_COMM,  KC_DOT,	 KC_SLSH,  KC_RSFT, KC_UP,  /******/
-        KC_ESC, KC_LOPTN, KC_LCMMD,  /******/ KC_SPC,  /******/ LT(MAC_FN1,KC_LANGUAGE_2),
-                                                                          LT(FN2,KC_LANGUAGE_1),
-                                                                                            KC_SPC,  /******/  KC_RCMMD, /******/  KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_GRV,  KC_1,	    KC_2,/**/KC_3,    KC_4,    KC_5,	KC_6,	  /******/ KC_7,    KC_8,	KC_9,	 KC_0,	   KC_MINS,  KC_EQL,   KC_BSPC, /******/ KC_MUTE,
+        KC_TAB,  KC_Q,/**/	KC_W,	 KC_E,	  KC_R,    KC_T,	/******/  KC_Y,	   KC_U,    KC_I,	KC_O,	 KC_P,	   KC_LBRC,  KC_RBRC,  KC_BSLS, /******/ KC_DEL,
+        KC_LCTL, KC_A,/**/	KC_S,	 KC_D,	  KC_F,    KC_G,    /******/  KC_H,    KC_J,	KC_K,	KC_L,	 LT(MAC_VIM,KC_SCLN),
+        /**/                                                                                                           KC_QUOT,             KC_ENT,  /******/ KC_HOME,
+        KC_LSFT, KC_Z,/**/  KC_X,    KC_C,    KC_V,	   KC_B,/**/KC_B,     KC_N,	   KC_M, KC_COMM, KC_DOT,/**/KC_SLSH,  KC_RSFT, /**/         KC_UP,  /******/
+        KC_ESC, KC_LOPTN, MT(MOD_LGUI,KC_LANGUAGE_2),
+                                     /******/ KC_SPC, /******/ MT(MAC_FN1,KC_SPC),MO(FN2),/******/ KC_SPC,  /******/ MT(KC_RGUI,KC_LANGUAGE_1),
+                                                                                                                         /******/  KC_LEFT, KC_DOWN, KC_RGHT),
 
     [WIN_BASE] = LAYOUT_69_ansi(
         KC_GRV,  KC_1,	   KC_2,	 KC_3,	  KC_4,    KC_5,	KC_6,	  KC_7,    KC_8,	KC_9,	 KC_0,	   KC_MINS,  KC_EQL,   KC_BSPC, /******/ KC_MUTE,
         KC_TAB,  KC_Q,	   KC_W,	 KC_E,	  KC_R,    KC_T,	KC_Y,	  KC_U,    KC_I,	KC_O,	 KC_P,	   KC_LBRC,  KC_RBRC,  KC_BSLS, /******/ KC_DEL,
-        MO(COMPAT),KC_A,   KC_S,	 KC_D,	  KC_F,    KC_G,    /******/  KC_H,    KC_J,	KC_K,	 KC_L,	   LT(VIM_MOU,KC_SCLN),
+        MO(COMPAT),KC_A,   KC_S,	 KC_D,	  KC_F,    KC_G,    /******/  KC_H,    KC_J,	KC_K,	 KC_L,	   LT(WIN_VIM,KC_SCLN),
                                                                                                                          KC_QUOT,  KC_ENT,  /******/ KC_HOME,
         KC_LSFT, /******/  KC_Z,	 KC_X,	  KC_C,    KC_V,	KC_B,	  KC_B,    KC_N,	KC_M,	 KC_COMM,  KC_DOT,	 KC_SLSH,  KC_RSFT, KC_UP,   /******/
-        KC_ESC , KC_LALT,  KC_LCTL,  /******/ KC_SPC,  /******/ LT(WIN_FN1,KC_LANGUAGE_2),
-                                                                          LT(FN2,KC_LANGUAGE_1),
-                                                                                           KC_SPC,  /******/   KC_RALT, /******/  KC_LEFT, KC_DOWN, KC_RGHT),
+        KC_ESC , KC_LALT,  MT(MOD_LCTL,KC_LANGUAGE_2),
+                                     /******/ KC_SPC,  /******/ MO(WIN_FN1),MO(FN2), /******/ KC_SPC,/******/   MT(MOD_RCTL,KC_LANGUAGE_1), /******/  KC_LEFT, KC_DOWN, KC_RGHT),
 
     [MAC_FN1] = LAYOUT_69_ansi(
-        KC_GRV,  KC_BRID,  KC_BRIU, KC_MCTRL, KC_LNPAD,RGB_VAD, RGB_VAI,  KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  _______, /******/ RGB_TOG,
+        _______, KC_BRID,  KC_BRIU, KC_MCTRL, KC_LNPAD,RGB_VAD, RGB_VAI,  KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  _______, /******/ RGB_TOG,
         _______, BT_HST1,  BT_HST2,  BT_HST3, P2P4G,   _______, _______,  _______, _______, _______, _______,  _______,  _______,  _______, /******/ KC_INS,
         RGB_TOG, RGB_MOD,  RGB_VAI,  RGB_HUI, RGB_SAI, RGB_SPI, /******/  _______, _______, _______, _______,  _______,  _______,  _______, /******/ KC_END,
         _______, /******/  RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD,  _______, NK_TOGG, _______, _______,  _______,  _______,  _______, KC_PGUP, /******/
         _______, _______,  _______,  /******/ _______, /******/ _______,  _______, /******/ _______, /******/  _______,  /******/  _______, KC_PGDN, _______),
 
     [WIN_FN1] = LAYOUT_69_ansi(
-        KC_GRV,  KC_BRID,  KC_BRIU,  KC_TASK, KC_FILE, RGB_VAD, RGB_VAI,  KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  _______, /******/ RGB_TOG,
+        _______, KC_BRID,  KC_BRIU,  KC_TASK, KC_FILE, RGB_VAD, RGB_VAI,  KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE,  KC_VOLD,  KC_VOLU,  _______, /******/ RGB_TOG,
         _______, BT_HST1,  BT_HST2,  BT_HST3, P2P4G,   _______, _______,  _______, _______, _______, _______,  _______,	 _______,  _______, /******/ KC_INS,
         RGB_TOG, RGB_MOD,  RGB_VAI,  RGB_HUI, RGB_SAI, RGB_SPI, /******/  _______, _______, _______, _______,  _______,  _______,  _______, /******/ KC_END,
         _______, /******/  RGB_RMOD, RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD,  _______, NK_TOGG, _______, _______,  _______,  _______,  _______, KC_PGUP, /******/
@@ -70,7 +72,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, /******/ KC_MINUS,  KC_LCBR, KC_RCBR, KC_PLUS, _______,  _______,  KC_ASTR,   KC_1,    KC_2,     KC_3,  KC_SLSH,  KC_COMM, _______, /******/
         _______, _______,  KC_LBRC,  /******/ KC_RBRC, /******/ _______,  _______,  /******/   KC_0, /******/   KC_DOT,  /******/  _______, _______, _______),
 
-    [VIM_MOU] = LAYOUT_69_ansi(
+    [MAC_VIM] = LAYOUT_69_ansi(
+        _______, _______,  _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,  _______,  QK_BOOT, /******/ _______,
+        _______, _______,  KC_MS_WH_LEFT,
+                                    KC_MS_UP,KC_MS_WH_RIGHT,
+                                                       _______, _______, KC_PGDN,KC_PAGE_UP,_______, _______,  _______,  _______,  _______, /******/ _______,
+        _______,KC_MS_WH_UP,KC_MS_LEFT,KC_MS_DOWN,KC_MS_RIGHT,
+                                                       _______, /******/  KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT,  _______,  _______,  _______, /******/ _______,
+        _______, /******/KC_MS_WH_DOWN,
+                                     _______, _______, _______, _______,  _______, _______, _______, _______,  _______,  _______,  _______, _______, /******/
+        _______, _______,KC_MS_BTN2,/******/KC_MS_BTN1,/******/ _______,RCMD(KC_LEFT), /******/
+                                                                                      RCMD(KC_RIGHT), /******/  _______,  /******/  _______, _______, KC_SYSTEM_SLEEP),
+
+
+    [WIN_VIM] = LAYOUT_69_ansi(
         _______, _______,  _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,  _______,  QK_BOOT, /******/ _______,
         _______, _______,  KC_MS_WH_LEFT,
                                     KC_MS_UP,KC_MS_WH_RIGHT,
@@ -82,6 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______,KC_MS_BTN2,/******/KC_MS_BTN1,/******/ _______,RALT(KC_RIGHT), /******/
                                                                                       RALT(KC_LEFT), /******/  _______,  /******/  _______, _______, KC_SYSTEM_SLEEP),
 
+
     [COMPAT] = LAYOUT_69_ansi(
         LCTL(KC_GRAVE), LCTL(KC_1),  LCTL(KC_2),  LCTL(KC_3), LCTL(KC_4), LCTL(KC_5), LCTL(KC_6),  LCTL(KC_7), LCTL(KC_8), LCTL(KC_9), LCTL(KC_0),  _______,  _______,  _______, /******/ _______,
           LCTL(KC_TAB), LCTL(KC_Q),  LCTL(KC_W),      KC_END, LCTL(KC_R), LCTL(KC_T), LCTL(KC_Y),  LCTL(KC_U), LCTL(KC_I), LCTL(KC_O),      KC_UP,  _______,  _______,  _______, /******/ _______,
@@ -89,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                _______,    /******/  LCTL(KC_Z),  LCTL(KC_X), LCTL(KC_C), LCTL(KC_V),    KC_LEFT,     KC_LEFT,    KC_DOWN,   KC_ENTER,    _______,  _______,  _______,  _______, _______, /******/
                _______,    _______,     KC_LWIN,     /******/    _______,    /******/    _______,     _______,    /******/    _______,    /******/  _______,  /******/  _______, _______, _______),
 
-    // [VIM_MOU] = LAYOUT_69_ansi(
+    // [WIN_VIM] = LAYOUT_69_ansi(
     //     _______, _______,  _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,  _______,  _______, /******/ _______,
     //     _______, _______,  _______,  _______, _______, _______, _______,  _______, _______, _______, _______,  _______,  _______,  _______, /******/ _______,
     //     _______, _______,  _______,  _______, _______, _______, /******/  _______, _______, _______, _______,  _______,  _______,  _______, /******/ _______,
@@ -105,7 +121,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		[MAC_FN1]  = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI)},
 		[WIN_FN1]  = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI)},
 		[FN2]	   = {ENCODER_CCW_CW(_______, _______)},
-		[VIM_MOU]  = {ENCODER_CCW_CW(_______, _______)},
+		[MAC_VIM]  = {ENCODER_CCW_CW(_______, _______)},
+		[WIN_VIM]  = {ENCODER_CCW_CW(_______, _______)},
 		[COMPAT]   = {ENCODER_CCW_CW(_______, _______)},
 	};
 #endif // ENCODER_MAP_ENABLE
@@ -137,6 +154,7 @@ void keyboard_post_init_user(void) {
 #define C_TENKY {0,0,255}
 #define C_OPERA {0,217,112}
 #define C_BRAKT {218,128,128}
+#define C_BLUTH {}
 
 const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     [MAC_BASE] = {
@@ -156,27 +174,19 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
     },
 
     [MAC_FN1] = {
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-        {45,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{90,255,127},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
+        C_SPCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR,
+        C_CTCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_CTCHL,
+        C_LAYER, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LAYER, C_SPCHL, C_ENTER, C_CTCHL,
+        C_MODIF, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_MODIF, C_CURSR,
+        C_CTCHL, C_MODIF, C_MODIF, C_SPCHL, C_LAYER, C_LAYER, C_SPCHL, C_MODIF, C_CURSR, C_CURSR, C_CURSR
     },
 
     [WIN_FN1] = {
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-        {45,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{90,255,127},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
+        C_SPCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR,
+        C_CTCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_CTCHL,
+        C_LAYER, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LAYER, C_SPCHL, C_ENTER, C_CTCHL,
+        C_MODIF, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_MODIF, C_CURSR,
+        C_CTCHL, C_MODIF, C_MODIF, C_SPCHL, C_LAYER, C_LAYER, C_SPCHL, C_MODIF, C_CURSR, C_CURSR, C_CURSR
     },
 
     [FN2] = {
@@ -187,27 +197,28 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
         C_CTCHL, C_MODIF, C_BRAKT, C_BRAKT, C_LAYER, C_LAYER, C_TENKY, C_TENKY, C_CURSR, C_CURSR, C_CURSR
     },
 
-    [VIM_MOU] = {
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-        {45,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{90,255,127},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
+    [MAC_VIM] = {
+        C_SPCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR,
+        C_CTCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_CTCHL,
+        C_LAYER, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LAYER, C_SPCHL, C_ENTER, C_CTCHL,
+        C_MODIF, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_MODIF, C_CURSR,
+        C_CTCHL, C_MODIF, C_MODIF, C_SPCHL, C_LAYER, C_LAYER, C_SPCHL, C_MODIF, C_CURSR, C_CURSR, C_CURSR
+         },
+
+    [WIN_VIM] = {
+        C_SPCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR,
+        C_CTCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_CTCHL,
+        C_LAYER, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LAYER, C_SPCHL, C_ENTER, C_CTCHL,
+        C_MODIF, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_MODIF, C_CURSR,
+        C_CTCHL, C_MODIF, C_MODIF, C_SPCHL, C_LAYER, C_LAYER, C_SPCHL, C_MODIF, C_CURSR, C_CURSR, C_CURSR
     },
+
     [COMPAT] = {
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-        {45,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{0,255,127},{90,255,127},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
-   {0,0,0,},{0,0,0,},{0,0,0,},{0,0,0,},
+        C_SPCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR,
+        C_CTCHL, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_CTCHL,
+        C_LAYER, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LAYER, C_SPCHL, C_ENTER, C_CTCHL,
+        C_MODIF, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_LETTR, C_SPCHL, C_SPCHL, C_SPCHL, C_MODIF, C_CURSR,
+        C_CTCHL, C_MODIF, C_MODIF, C_SPCHL, C_LAYER, C_LAYER, C_SPCHL, C_MODIF, C_CURSR, C_CURSR, C_CURSR
     },
 };
 
@@ -245,8 +256,11 @@ bool rgb_matrix_indicators_user(void) {
         case FN2:
             set_layer_color(FN2);
             break;
-        case VIM_MOU:
-            set_layer_color(VIM_MOU);
+        case WIN_VIM:
+            set_layer_color(WIN_VIM);
+            break;
+        case MAC_VIM:
+            set_layer_color(MAC_VIM);
             break;
         case COMPAT:
             set_layer_color(COMPAT);
